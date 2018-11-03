@@ -13,40 +13,56 @@ class MessagesContainer extends React.Component {
 
   componentDidMount() {
     this.props.socket.on('spotim/chat', message => {
-      this.setState({messages: this.state.messages.concat(message)})
+      this.setState({ messages: this.state.messages.concat(message) })
     })
   }
 
   clearMessage = () => {
-    this.setState({text: ''})
+    this.setState({ text: '' })
   }
 
   onSenderChange = event => {
     const name = event.target.value
-    this.setState({name})
+    this.setState({ name })
   }
 
   onMessageChange = event => {
     const text = event.target.value
-    this.setState({text})
+    this.setState({ text })
   }
 
-  handleSubmit = event => {
-    if (event.key === 'Enter') {
-      const message = {name: this.state.name, text: this.state.text}
+  isValid = () => {
+    const name = this.state.name
+    const text = this.state.text
+    return name.length > 0 && text.length > 0
+  }
+
+  handleSubmit = () => {
+    if (this.isValid()) {
+      const message = {
+        name: this.state.name,
+        text: this.state.text,
+        userUuid: this.props.userUuid
+      }
       this.props.socket.emit('spotim/chat', message)
       this.clearMessage()
     }
   }
 
   render() {
-    const {onSenderChange, onMessageChange, handleSubmit} = this
-    const {name, text, messages} = this.state
+    const { onSenderChange, onMessageChange, handleSubmit, isValid } = this
+    const { userUuid } = this.props
+    const { name, text, messages } = this.state
     return (
-      <div className="message-list">
-        <MessagesList messages={messages} name={name}/>
+      <div className="message-container">
+        <MessagesList messages={messages} userUuid={userUuid} />
         <MessageSender name={name} onSenderChange={onSenderChange} />
-        <MessageCreation text={text} onMessageChange={onMessageChange} handleSubmit={handleSubmit}/>
+        <MessageCreation
+          text={text}
+          onMessageChange={onMessageChange}
+          handleSubmit={handleSubmit}
+          isValid={isValid}
+        />
       </div>
     )
   }

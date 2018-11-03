@@ -17,4 +17,4 @@ socket.on('disconnect', function() {
   console.log('disconnected from chat server!')
 })
 
-ReactDOM.render(<App socket={socket}/>, document.getElementById('root'))
+ReactDOM.render(<App socket={socket} />, document.getElementById('root'))

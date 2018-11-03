@@ -2,21 +2,33 @@ import React from 'react'
 import TextField from '@material-ui/core/TextField'
 import { withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
+import SendIcon from '@material-ui/icons/Send'
 import './MessageCreation.css'
 
-
-
-
-
-const styles = {
+const styles = theme => ({
   input: {
-    color: 'white'
+    color: '#FFFFFF'
+  },
+  button: {
+    margin: theme.spacing.unit,
+    position: 'relative',
+    bottom: '92px',
+    left: '665px'
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit
   }
-}
+})
 
 class MessageCreation extends React.Component {
+  onKeyPressHandler = event => {
+    if (event.key === 'Enter') {
+      this.props.handleSubmit()
+    }
+  }
+
   render() {
-    const {text, classes, onMessageChange, handleSubmit} = this.props
+    const { text, classes, onMessageChange, handleSubmit, isValid } = this.props
     return (
       <div className="message-creation">
         <TextField
@@ -26,19 +38,20 @@ class MessageCreation extends React.Component {
           placeholder="Write a message..."
           margin="normal"
           variant="outlined"
-          onKeyPress={handleSubmit}
+          onKeyPress={this.onKeyPressHandler}
           onChange={onMessageChange}
           InputProps={{
             className: classes.input
           }}
-         
-        
-
         />
-            <Button  variant="contained" color="secondary" disabled className={classes.button}>
-          Disabled
-          </Button>
-
+        <Button
+          variant="fab"
+          color="primary"
+          disabled={!isValid()}
+          className={classes.button}
+          onClick={handleSubmit}>
+          <SendIcon />
+        </Button>
       </div>
     )
   }

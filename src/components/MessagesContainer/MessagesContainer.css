@@ -1,6 +1,5 @@
-.message-list {
+.message-container {
   height: 70%;
   width: 750px;
-  max-height: 1000px;
   border: 1px solid #45464e;
 }
