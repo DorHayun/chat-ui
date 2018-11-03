@@ -1,7 +1,4 @@
 import React from 'react'
-import Avatar from '@material-ui/core/Avatar'
-import deepOrange from '@material-ui/core/colors/deepOrange'
-import deepPurple from '@material-ui/core/colors/deepPurple '
 import './MessageBubble.css'
 
 class MessageBubble extends React.Component {
