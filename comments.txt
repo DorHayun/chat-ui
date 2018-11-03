@@ -1,6 +1,7 @@
 Add your general design and decision comments here:
 
-
+I mainley used statefull components without any state managers.
+Most  logic and behaviour are implemented in MessageContainers component
 
 
 
